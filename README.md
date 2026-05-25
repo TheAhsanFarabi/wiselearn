@@ -7,8 +7,6 @@
 [![PyPI version](https://img.shields.io/pypi/v/wiselearn.svg)](https://pypi.org/project/wiselearn/)
 [![Python versions](https://img.shields.io/pypi/pyversions/wiselearn.svg)](https://pypi.org/project/wiselearn/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/wiselearn.svg)](https://pypi.org/project/wiselearn/)
-[![GitHub stars](https://img.shields.io/github/stars/TheAhsanFarabi/wiselearn?style=social)](https://github.com/TheAhsanFarabi/wiselearn)
 
 </div>
 
