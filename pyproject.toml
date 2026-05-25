@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "wiselearn"
+version = "0.1.0"
+description = "An ML library that teaches you while you train — and catches mistakes before they cost you weeks."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [
+    { name = "Ahsan Farabi", email = "ahsanfarabi1971@gmail.com" },
+]
+keywords = ["machine-learning", "ml", "education", "beginner", "scikit-learn", "auto-ml", "leakage"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "scikit-learn>=1.3",
+    "rich>=13.0",
+    "joblib>=1.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "ruff>=0.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/TheAhsanFarabi/wiselearn"
+Repository = "https://github.com/TheAhsanFarabi/wiselearn"
+Issues = "https://github.com/TheAhsanFarabi/wiselearn"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/wiselearn"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
