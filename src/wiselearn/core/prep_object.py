@@ -60,6 +60,17 @@ class Prep:
             if col in df.columns:
                 # Handle unseen categories: map to a default value
                 known = set(encoder.classes_)
+                unseen = set(df[col].astype(str).unique()) - known
+                if unseen:
+                    import warnings
+                    warnings.warn(
+                        f"Column '{col}' contains {len(unseen)} unseen category value(s) "
+                        f"not seen during training (e.g. {repr(next(iter(unseen)))}). "
+                        f"These will be replaced with '{encoder.classes_[0]}'. "
+                        f"Predictions for these rows may be unreliable.",
+                        UserWarning,
+                        stacklevel=3,
+                    )
                 df[col] = df[col].astype(str).apply(
                     lambda x: x if x in known else encoder.classes_[0]
                 )

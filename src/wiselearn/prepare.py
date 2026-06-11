@@ -107,12 +107,29 @@ def prepare(
 
     # Train/test split (stratified for classification)
     stratify = y if task == "classification" else None
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y,
-        test_size=test_size,
-        random_state=random_state,
-        stratify=stratify,
-    )
+    try:
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y,
+            test_size=test_size,
+            random_state=random_state,
+            stratify=stratify,
+        )
+    except ValueError as e:
+        if stratify is not None and "least populated class" in str(e).lower():
+            reporter.warn(
+                "Stratified split failed — at least one class has too few samples "
+                "to appear in both train and test sets. "
+                "Falling back to a non-stratified split. "
+                "Class distribution in test set may not match training."
+            )
+            X_train, X_test, y_train, y_test = train_test_split(
+                X, y,
+                test_size=test_size,
+                random_state=random_state,
+                stratify=None,
+            )
+        else:
+            raise
     reporter.info(
         f"Split: {len(X_train):,} train / {len(X_test):,} test "
         f"(test_size={test_size:.0%}, stratified={'yes' if stratify is not None else 'no'})"
@@ -131,6 +148,13 @@ def prepare(
 
         # Transform test, handling unseen categories
         known = set(encoder.classes_)
+        unseen = set(X_test[col].astype(str).unique()) - known
+        if unseen:
+            reporter.warn(
+                f"'{col}' has {len(unseen)} unseen category value(s) in the test set "
+                f"(e.g. {repr(next(iter(unseen)))}). "
+                f"These will be replaced with '{encoder.classes_[0]}' during encoding."
+            )
         X_test[col] = X_test[col].astype(str).apply(
             lambda x: x if x in known else encoder.classes_[0]
         )
