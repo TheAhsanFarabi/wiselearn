@@ -102,7 +102,7 @@ class IDColumnRule(Rule):
             looks_like_id = (
                 name_lower in ("id", "uuid", "index")
                 or name_lower.endswith("_id")
-                or name_lower.endswith("id")
+                or name_lower.startswith("id_")
             )
             if looks_like_id and data[col].nunique() == len(data):
                 id_like.append(col)
